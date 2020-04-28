@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:hive_preferences/preferences.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Hive Preferences"),
+      body: Center(
+        child: RaisedButton(
+          onPressed: _incrementCounter,
+          child: Text('Increment Counter'),
+        ),
       ),
     );
+  }
+
+  void _incrementCounter() async {
+    final preferences = await Preferences.getInstance();
+    final counter = (preferences.getCounter() ?? 0) + 1;
+    print('Pressed $counter times.');
+    await preferences.setCounter(counter);
   }
 }
