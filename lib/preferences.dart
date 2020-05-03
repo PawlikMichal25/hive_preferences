@@ -13,9 +13,13 @@ class Preferences {
     return Preferences._();
   }
 
-  int getCounter() => _box.get(_counterKey, defaultValue: 0) as int;
+  int getCounter() => _getValue(_counterKey);
 
-  Future<void> setCounter(int counter) => _box.put(_counterKey, counter);
+  Future<void> setCounter(int counter) => _setValue(_counterKey, counter);
+
+  T _getValue<T>(dynamic key, {T defaultValue}) => _box.get(key, defaultValue: defaultValue) as T;
+
+  Future<void> _setValue<T>(dynamic key, T value) => _box.put(key, value);
 
   Box<dynamic> get _box => Hive.box<dynamic>(_preferencesBox);
 }
